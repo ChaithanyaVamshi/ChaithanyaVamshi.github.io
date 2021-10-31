@@ -1,0 +1,2344 @@
+I"}<h1 id="predicting-hotel-booking-cancellations-using-machine-learning-with-python"><strong>Predicting Hotel Booking Cancellations Using Machine Learning With Python</strong></h1>
+
+<p>Booking cancellations have a substantial impact on demand management decisions in the hospitality industry.</p>
+
+<p>Every year, more than 140 million bookings were made on the internet and many hotel bookings were booked through top-visited travel websites like Booking.com, Expedia.com, Hotels.com, etc.</p>
+
+<p><img src="D:/Portfolio/chaithanyavamshi.github.io/img/posts/header_img.png" alt="header_img.png" /></p>
+
+<h2 id="hotel-booking-cancellations-a-growing-problem">Hotel Booking Cancellations, A Growing Problem…</h2>
+
+<p>When Analyzing the past 5 years data, D-Edge Hospitality solutions has found that the global average cancellation rate on bookings has reached almost 40% and this trend produces a very negative impact on hotel revenue.</p>
+
+<p><img src="D:/Portfolio/chaithanyavamshi.github.io/img/posts/header2.png" alt="header2.png" /></p>
+
+<p>To overcome the problems caused by booking cancellations, hotels implement rigid cancellation policies, inventory management, and overbooking strategies, which can also have a negative influence on revenue and reputation.</p>
+
+<p>Once the reservation has been canceled, there is almost nothing to be done and it creates discomfort for many Hotels and Hotel Technology companies. Therefore, predicting reservations which might get canceled and preventing these cancellations will create a surplus revenue for both Hotels and Hotel Technology companies.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>Have you ever wondered what if there was a way we could predict which guests are likely to Cancel the Hotel Booking? That would be great right?</p>
+
+<p>Luckily, by using Machine learning with Python, we can predict the guests who are likely to cancel the reservation at the Hotels and this will create a surplus revenue, better forecasts and reduce uncertainty in business management decisions.</p>
+
+<p>If you want to follow a process while working on a machine learning project, this blog is for you. In this blog, I will walk you through the entire process of solving a real-world Machine learning project right from understanding the Business problem to the Model deployment on the cloud.</p>
+
+<h2 id="machine-learning-project-life-cycle">Machine Learning Project Life Cycle</h2>
+
+<ol>
+  <li>Understanding the Business Problem</li>
+  <li>Data Collection and Understanding</li>
+  <li>Data Exploration</li>
+  <li>Data Preparation</li>
+  <li>Modeling</li>
+  <li>Model Deployment</li>
+</ol>
+
+<p><img src="attachment:crisp_dm.png" alt="crisp_dm.png" /></p>
+
+<h3 id="1-understanding-business-problem">1. Understanding Business Problem</h3>
+
+<p>The Goal of this project is to Predict the Guests who are likely to Cancel the Hotel Booking using Machine Learning with Python. Therefore, predicting reservations which might get canceled and preventing these cancellations will create a surplus revenue, better forecasts and reduce uncertainty in business management decisions.</p>
+
+<h3 id="2-data-collection-and-understanding">2. Data Collection and Understanding</h3>
+
+<p>I have collected the dataset from the kaggle. Dataset is available at https://www.kaggle.com/jessemostipak/hotel-booking-demand</p>
+
+<p>This dataset contains booking information for a City hotel and a Resort hotel, and includes information such as when the booking was made, length of stay, the number of adults, children, and/or babies, and the number of available parking spaces etc.</p>
+
+<h3 id="3-data-exploration">3. Data Exploration</h3>
+
+<p>In this step, we will apply Exploratory Data Analysis (EDA) to extract insights from the data set to know which features have contributed more in predicting Cancellations by performing Data Analysis using Pandas and Data visualization using Matplotlib &amp; Seaborn. It is always a good practice to understand the data first and try to gather as many insights from it.</p>
+
+<p>Below are tasks to be performed:</p>
+
+<ul>
+  <li>What is MongoDB Atlas Cloud</li>
+  <li>Steps to setup MongoDB Atlas Cloud</li>
+  <li>Importing Libraries</li>
+  <li>Storing the data into MongoDB Atlas Cloud Database</li>
+  <li>Loading (Fetching) data from MongoDB Atlas Cloud Database</li>
+  <li>Exploratory Data Analysis (EDA) on all Features</li>
+  <li>Data Visualisation on all Important Features</li>
+</ul>
+
+<h4 id="31-what-is-mongodb-atlas-cloud">3.1 What is MongoDB Atlas Cloud?</h4>
+
+<p>MongoDB Atlas is a fully-managed Database-as-a-Service (DBaaS) cloud database that handles all the complexity of deploying, managing, and healing your deployments on the cloud service provider of your choice (AWS , Azure, and GCP). MongoDB Atlas is the best way to deploy, run, and scale MongoDB in the cloud.</p>
+
+<p>In this project, we will store the dataset into MongoDB Atlas cloud database by following industry best practices which helps in managing the data in scalable, robust and secure manner.</p>
+
+<h4 id="32-steps-needed-to-get-started-using-mongodb-atlas-cloud">3.2 Steps needed to get started using MongoDB Atlas Cloud:</h4>
+<p><br /></p>
+
+<p><strong>1. Create an Atlas Account using Gmail Id</strong></p>
+
+<p><strong>2. Create a Free Cluster in MongoDB Atlas Cloud</strong></p>
+
+<p><img src="attachment:image.png" alt="image.png" />
+<br /></p>
+
+<p><strong>3. Add Your Connection IP Address to Your IP Access List</strong></p>
+
+<p><img src="attachment:image-2.png" alt="image-2.png" />
+<br /></p>
+
+<p><strong>4. Create a Database and User for Your Cluster with username and password to make it secure</strong></p>
+
+<p><img src="attachment:image-3.png" alt="image-3.png" />
+<br /></p>
+
+<p><strong>5. Connect to Your Cluster</strong></p>
+
+<p><img src="attachment:image-4.png" alt="image-4.png" />
+<br /></p>
+
+<p><strong>6. Insert and View Data in Your Cluster</strong></p>
+
+<p><img src="attachment:image-5.png" alt="image-5.png" /></p>
+
+<h4 id="33-importing-libraries"><strong>3.3 Importing Libraries</strong></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s">'ignore'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Figure size 864x432 with 0 Axes&gt;
+</code></pre></div></div>
+
+<h4 id="34-storing-the-dataset-into-mongodb-database"><strong>3.4 Storing the Dataset into MongoDB Database</strong></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Install and import Pymongo libraries to connect with MongoDB Atlas Cloud
+</span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pymongo</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="s">'pymongo[srv]'</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">dnspython</span>
+
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Requirement already satisfied: pymongo in /usr/local/lib/python3.7/dist-packages (3.12.0)
+Requirement already satisfied: pymongo[srv] in /usr/local/lib/python3.7/dist-packages (3.12.0)
+Requirement already satisfied: dnspython&lt;2.0.0,&gt;=1.16.0 in /usr/local/lib/python3.7/dist-packages (from pymongo[srv]) (1.16.0)
+Requirement already satisfied: dnspython in /usr/local/lib/python3.7/dist-packages (1.16.0)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Establish a connection to a MongoDB Atlas Cluster with Secured Authentication using User Name and Password of the Database
+</span><span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s">"mongodb+srv://production:prod_db@cluster0.7u4hj.mongodb.net/myFirstDatabase?retryWrites=true&amp;w=majority"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create Database and specify name of database
+</span><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">get_database</span><span class="p">(</span><span class="s">'hotel_bookings_db'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a collection
+</span><span class="n">records</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="n">hotel_records</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create Dataframe and Read the dataset using Pandas
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'/content/bookings.csv'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hotel</th>
+      <th>is_canceled</th>
+      <th>lead_time</th>
+      <th>arrival_date_year</th>
+      <th>arrival_date_month</th>
+      <th>arrival_date_week_number</th>
+      <th>arrival_date_day_of_month</th>
+      <th>stays_in_weekend_nights</th>
+      <th>stays_in_week_nights</th>
+      <th>adults</th>
+      <th>children</th>
+      <th>babies</th>
+      <th>meal</th>
+      <th>country</th>
+      <th>market_segment</th>
+      <th>distribution_channel</th>
+      <th>is_repeated_guest</th>
+      <th>previous_cancellations</th>
+      <th>previous_bookings_not_canceled</th>
+      <th>reserved_room_type</th>
+      <th>assigned_room_type</th>
+      <th>booking_changes</th>
+      <th>deposit_type</th>
+      <th>agent</th>
+      <th>company</th>
+      <th>days_in_waiting_list</th>
+      <th>customer_type</th>
+      <th>adr</th>
+      <th>required_car_parking_spaces</th>
+      <th>total_of_special_requests</th>
+      <th>reservation_status</th>
+      <th>reservation_status_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>342</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>C</td>
+      <td>C</td>
+      <td>3</td>
+      <td>No Deposit</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>737</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>C</td>
+      <td>C</td>
+      <td>4</td>
+      <td>No Deposit</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A</td>
+      <td>C</td>
+      <td>0</td>
+      <td>No Deposit</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>13</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Corporate</td>
+      <td>Corporate</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0</td>
+      <td>No Deposit</td>
+      <td>304.0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>14</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Online TA</td>
+      <td>TA/TO</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0</td>
+      <td>No Deposit</td>
+      <td>240.0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>98.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>Check-Out</td>
+      <td>2015-07-03</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Convert Dataframe into Dictionary as MongoDB stores data in records/documents
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span> <span class="o">=</span> <span class="s">'records'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Insert records in the dataset into MongoDB collection "hotel_records"
+</span><span class="n">db</span><span class="p">.</span><span class="n">hotel_records</span><span class="p">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"All the Data has been Exported to MongoDB Successfully"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>All the Data has been Exported to MongoDB Successfully
+</code></pre></div></div>
+
+<h4 id="35-loading-fetching-data-from-mongodb-database"><strong>3.5 Loading (Fetching) data from MongoDB Database</strong></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Load all records from MongoDB using find()
+</span><span class="n">all_records</span> <span class="o">=</span> <span class="n">records</span><span class="p">.</span><span class="n">find</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">all_records</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;pymongo.cursor.Cursor object at 0x7fe1dcd4ec50&gt;
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Convert Cursor Object into list
+</span><span class="n">list_cursor</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_records</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Convert list into Dataframe
+</span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">list_cursor</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>_id</th>
+      <th>hotel</th>
+      <th>is_canceled</th>
+      <th>lead_time</th>
+      <th>arrival_date_year</th>
+      <th>arrival_date_month</th>
+      <th>arrival_date_week_number</th>
+      <th>arrival_date_day_of_month</th>
+      <th>stays_in_weekend_nights</th>
+      <th>stays_in_week_nights</th>
+      <th>adults</th>
+      <th>children</th>
+      <th>babies</th>
+      <th>meal</th>
+      <th>country</th>
+      <th>market_segment</th>
+      <th>distribution_channel</th>
+      <th>is_repeated_guest</th>
+      <th>previous_cancellations</th>
+      <th>previous_bookings_not_canceled</th>
+      <th>reserved_room_type</th>
+      <th>assigned_room_type</th>
+      <th>booking_changes</th>
+      <th>deposit_type</th>
+      <th>agent</th>
+      <th>company</th>
+      <th>days_in_waiting_list</th>
+      <th>customer_type</th>
+      <th>adr</th>
+      <th>required_car_parking_spaces</th>
+      <th>total_of_special_requests</th>
+      <th>reservation_status</th>
+      <th>reservation_status_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>617745f32cb05b4871a1523c</td>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>342</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>C</td>
+      <td>C</td>
+      <td>3</td>
+      <td>No Deposit</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>617745f32cb05b4871a1523d</td>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>737</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>C</td>
+      <td>C</td>
+      <td>4</td>
+      <td>No Deposit</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>617745f32cb05b4871a1523e</td>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A</td>
+      <td>C</td>
+      <td>0</td>
+      <td>No Deposit</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>617745f32cb05b4871a1523f</td>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>13</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Corporate</td>
+      <td>Corporate</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0</td>
+      <td>No Deposit</td>
+      <td>304.0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>617745f32cb05b4871a15240</td>
+      <td>Resort Hotel</td>
+      <td>0</td>
+      <td>14</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Online TA</td>
+      <td>TA/TO</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0</td>
+      <td>No Deposit</td>
+      <td>240.0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>Transient</td>
+      <td>98.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>Check-Out</td>
+      <td>2015-07-03</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 119390 entries, 0 to 119389
+Data columns (total 33 columns):
+ #   Column                          Non-Null Count   Dtype  
+---  ------                          --------------   -----  
+ 0   _id                             119390 non-null  object 
+ 1   hotel                           119390 non-null  object 
+ 2   is_canceled                     119390 non-null  int64  
+ 3   lead_time                       119390 non-null  int64  
+ 4   arrival_date_year               119390 non-null  int64  
+ 5   arrival_date_month              119390 non-null  object 
+ 6   arrival_date_week_number        119390 non-null  int64  
+ 7   arrival_date_day_of_month       119390 non-null  int64  
+ 8   stays_in_weekend_nights         119390 non-null  int64  
+ 9   stays_in_week_nights            119390 non-null  int64  
+ 10  adults                          119390 non-null  int64  
+ 11  children                        119386 non-null  float64
+ 12  babies                          119390 non-null  int64  
+ 13  meal                            119390 non-null  object 
+ 14  country                         118902 non-null  object 
+ 15  market_segment                  119390 non-null  object 
+ 16  distribution_channel            119390 non-null  object 
+ 17  is_repeated_guest               119390 non-null  int64  
+ 18  previous_cancellations          119390 non-null  int64  
+ 19  previous_bookings_not_canceled  119390 non-null  int64  
+ 20  reserved_room_type              119390 non-null  object 
+ 21  assigned_room_type              119390 non-null  object 
+ 22  booking_changes                 119390 non-null  int64  
+ 23  deposit_type                    119390 non-null  object 
+ 24  agent                           103050 non-null  float64
+ 25  company                         6797 non-null    float64
+ 26  days_in_waiting_list            119390 non-null  int64  
+ 27  customer_type                   119390 non-null  object 
+ 28  adr                             119390 non-null  float64
+ 29  required_car_parking_spaces     119390 non-null  int64  
+ 30  total_of_special_requests       119390 non-null  int64  
+ 31  reservation_status              119390 non-null  object 
+ 32  reservation_status_date         119390 non-null  object 
+dtypes: float64(4), int64(16), object(13)
+memory usage: 30.1+ MB
+</code></pre></div></div>
+
+<h4 id="36-exploratory-data-analysis-eda-on-all-features"><strong>3.6 Exploratory Data Analysis (EDA) on all Features</strong></h4>
+
+<p><strong>1. Top 10 countries of origin of Hotel visitors (Guests)</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PRT    0.408656
+GBR    0.102008
+FRA    0.087593
+ESP    0.072059
+DEU    0.061286
+ITA    0.031673
+IRL    0.028385
+BEL    0.019697
+BRA    0.018704
+NLD    0.017695
+Name: country, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'country'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df1</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="n">pd</span><span class="p">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'country'</span><span class="p">]).</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">10</span><span class="p">].</span><span class="n">index</span><span class="p">,</span><span class="n">palette</span><span class="o">=</span> <span class="s">'colorblind'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Top 10 Countries of Origin of the Guests'</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Country'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Reservation Count'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0, 0.5, 'Reservation Count')
+</code></pre></div></div>
+
+<p><img src="output_33_1.png" alt="png" /></p>
+
+<ul>
+  <li><strong>About 40% of all bookings are created from Portugal followed by Great Britain (10%) &amp; France (8%)</strong></li>
+</ul>
+
+<p><strong>2. Which Month is the Most Occupied (Busiest) with Bookings at the Hotel</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>August       0.116233
+July         0.106047
+May          0.098760
+October      0.093475
+April        0.092880
+June         0.091624
+September    0.088014
+March        0.082034
+February     0.067577
+November     0.056906
+December     0.056789
+January      0.049661
+Name: arrival_date_month, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ordered_months</span> <span class="o">=</span> <span class="p">[</span><span class="s">"January"</span><span class="p">,</span> <span class="s">"February"</span><span class="p">,</span> <span class="s">"March"</span><span class="p">,</span> <span class="s">"April"</span><span class="p">,</span> <span class="s">"May"</span><span class="p">,</span> <span class="s">"June"</span><span class="p">,</span> <span class="s">"July"</span><span class="p">,</span> <span class="s">"August"</span><span class="p">,</span> <span class="s">"September"</span><span class="p">,</span> <span class="s">"October"</span><span class="p">,</span> <span class="s">"November"</span><span class="p">,</span> <span class="s">"December"</span><span class="p">]</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">ordered_months</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'arrival_date_month'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df1</span><span class="p">,</span><span class="n">palette</span><span class="o">=</span> <span class="s">'viridis'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Most Occupied (Busiest) Month with Bookings'</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Month'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Reservation Count'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0, 0.5, 'Reservation Count')
+</code></pre></div></div>
+
+<p><img src="output_37_1.png" alt="png" /></p>
+
+<ul>
+  <li><strong>August is the most occupied (busiest) month with 11.62% bookings and January is the most unoccupied month with 4.96% bookings.</strong></li>
+</ul>
+
+<p><strong>3. How many Bookings were Cancelled at the Hotel</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'is_canceled'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0    0.629584
+1    0.370416
+Name: is_canceled, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">proportion</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'is_canceled'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Not Cancelled'</span><span class="p">,</span><span class="s">'Cancelled'</span><span class="p">]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Proportion of Cancelled &amp; Not Cancelled Bookings'</span><span class="p">,</span><span class="n">weight</span> <span class="o">=</span> <span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">pie</span><span class="p">(</span><span class="n">proportion</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span><span class="n">shadow</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">autopct</span> <span class="o">=</span> <span class="s">'%1.1f%%'</span><span class="p">,</span><span class="n">wedgeprops</span><span class="o">=</span> <span class="p">{</span><span class="s">'edgecolor'</span><span class="p">:</span><span class="s">'black'</span><span class="p">},</span><span class="n">textprops</span><span class="o">=</span><span class="p">{</span><span class="s">'fontsize'</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="output_41_0.png" alt="png" /></p>
+
+<ul>
+  <li><strong>According to the pie chart, 63% bookings were not cancelled and 37% of the bookings were cancelled at the Hotel.</strong></li>
+</ul>
+
+<p><strong>4. Which Month has Highest Number of Cancellations By Hotel Type</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ordered_months</span> <span class="o">=</span> <span class="p">[</span><span class="s">"January"</span><span class="p">,</span> <span class="s">"February"</span><span class="p">,</span> <span class="s">"March"</span><span class="p">,</span> <span class="s">"April"</span><span class="p">,</span> <span class="s">"May"</span><span class="p">,</span> <span class="s">"June"</span><span class="p">,</span> <span class="s">"July"</span><span class="p">,</span> <span class="s">"August"</span><span class="p">,</span> <span class="s">"September"</span><span class="p">,</span> <span class="s">"October"</span><span class="p">,</span> <span class="s">"November"</span><span class="p">,</span> <span class="s">"December"</span><span class="p">]</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">ordered_months</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">"arrival_date_month"</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">"is_canceled"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">"hotel"</span><span class="p">,</span><span class="n">hue_order</span> <span class="o">=</span> <span class="p">[</span><span class="s">"City Hotel"</span><span class="p">,</span> <span class="s">"Resort Hotel"</span><span class="p">],</span><span class="n">data</span><span class="o">=</span><span class="n">df1</span><span class="p">,</span><span class="n">palette</span><span class="o">=</span> <span class="s">'Blues'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Cancelations Per Month"</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Arrival Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Cancelations %"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="output_44_0.png" alt="png" /></p>
+
+<ul>
+  <li><strong>City hotel : The number of cancelations per month is around 40% throughout the year.</strong></li>
+  <li><strong>Resort hotel : The number of cancellations are highest in the summer (June,July, August) and lowest during the winter (November,December,January). In short, the possibility of cancellation for resort hotels in winter is very low.</strong></li>
+</ul>
+
+<p><strong>5. How many Bookings were Cancelled by Hotel Type</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'is_canceled'</span><span class="p">)[</span><span class="s">'hotel'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>is_canceled  hotel       
+0            City Hotel      0.615012
+             Resort Hotel    0.384988
+1            City Hotel      0.748508
+             Resort Hotel    0.251492
+Name: hotel, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span> <span class="s">'is_canceled'</span><span class="p">,</span><span class="n">data</span> <span class="o">=</span> <span class="n">df1</span><span class="p">,</span><span class="n">hue</span> <span class="o">=</span> <span class="s">'hotel'</span><span class="p">,</span><span class="n">palette</span><span class="o">=</span> <span class="s">'Set1'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Cancelation Status By Hotel Type "</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Cancelation Status"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">" Reservations Count"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="output_48_0.png" alt="png" /></p>
+
+<ul>
+  <li><strong>Resort Hotel : Total of 25.14% Bookings were cancelled</strong></li>
+  <li><strong>City Hotel : Total of 74.85% Bookings were cancelled</strong></li>
+</ul>
+
+<p><strong>6. Relationship between Average Daily Rate(ADR) and Arrival Month by Booking cancellation status</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ordered_months</span> <span class="o">=</span> <span class="p">[</span><span class="s">"January"</span><span class="p">,</span> <span class="s">"February"</span><span class="p">,</span> <span class="s">"March"</span><span class="p">,</span> <span class="s">"April"</span><span class="p">,</span> <span class="s">"May"</span><span class="p">,</span> <span class="s">"June"</span><span class="p">,</span> <span class="s">"July"</span><span class="p">,</span> <span class="s">"August"</span><span class="p">,</span> <span class="s">"September"</span><span class="p">,</span> <span class="s">"October"</span><span class="p">,</span> <span class="s">"November"</span><span class="p">,</span> <span class="s">"December"</span><span class="p">]</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">ordered_months</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">"arrival_date_month"</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">"adr"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">"is_canceled"</span><span class="p">,</span><span class="n">hue_order</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">data</span><span class="o">=</span><span class="n">df1</span><span class="p">,</span><span class="n">palette</span><span class="o">=</span> <span class="s">'Set1'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Relationship between ADR and Arrival Month by Booking cancellation status"</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Arrival Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Average Daily Rate"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="output_51_0.png" alt="png" /></p>
+
+<ul>
+  <li><strong>August is the most occupied (Busiest) month of bookings.</strong></li>
+  <li><strong>Highest Average Daily Rate(ADR) is in August may be it could be one of the reasons for more canceled bookings.</strong></li>
+</ul>
+
+<p><strong>7. Total Number of Bookings by Market Segment</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'market_segment'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Online TA        0.473046
+Offline TA/TO    0.202856
+Groups           0.165935
+Direct           0.105587
+Corporate        0.044350
+Complementary    0.006223
+Aviation         0.001985
+Undefined        0.000017
+Name: market_segment, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'market_segment'</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="s">'colorblind'</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="n">pd</span><span class="p">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'market_segment'</span><span class="p">]).</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Total Number of Bookings by Market Segment'</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Market Segment'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Reservation Count'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0, 0.5, 'Reservation Count')
+</code></pre></div></div>
+
+<p><img src="output_55_1.png" alt="png" /></p>
+
+<ul>
+  <li><strong>Above graph depicts that 47.3% of bookings are made via Online Travel Agents</strong></li>
+  <li><strong>Around 20% of bookings are made via Offline Travel Agents and less than 20% of bookings made directly without any Agents</strong></li>
+</ul>
+
+<p><strong>8. Total Nights Spent by Guests at the Hotel by Market Segment and Hotel Type</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'total_stay'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'stays_in_week_nights'</span><span class="p">]</span> <span class="o">+</span> <span class="n">df1</span><span class="p">[</span><span class="s">'stays_in_weekend_nights'</span><span class="p">]</span> 
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">"market_segment"</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">"total_stay"</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df1</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">"hotel"</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">'rocket'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Total Nights Spent by Guests by Market Segment &amp; Hotel Type'</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Market Segment'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Number of Days'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">"upper right"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.legend.Legend at 0x7fe1be830d10&gt;
+</code></pre></div></div>
+
+<p><img src="output_58_1.png" alt="png" /></p>
+
+<ul>
+  <li><strong>City Hotel:  Most of guests prefer to stay between 1-4 nights</strong></li>
+  <li><strong>Resort Hotel : Most of the guests prefer to stay more than 3 nights</strong></li>
+</ul>
+
+<p><strong>9. Arrival Date Year vs Lead Time By Booking Cancellation Status</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'arrival_date_year'</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span><span class="s">'lead_time'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">"is_canceled"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df1</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s">"viridis"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Arrival Year vs Lead Time By Cancellation Status'</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">' Arrival Year'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Lead Time'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">"upper right"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.legend.Legend at 0x7fe1bcec7e10&gt;
+</code></pre></div></div>
+
+<p><img src="output_61_1.png" alt="png" /></p>
+
+<ul>
+  <li><strong>For all the 3 years, bookings with lead time more than 100 days has more chances of getting cancelled</strong></li>
+</ul>
+
+<p><strong>10. Total Number of bookings by deposit type</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'deposit_type'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>No Deposit    0.876464
+Non Refund    0.122179
+Refundable    0.001357
+Name: deposit_type, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">proportion</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'deposit_type'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">'No Deposit'</span><span class="p">,</span><span class="s">'Non Refundable'</span><span class="p">,</span><span class="s">'Refundable'</span><span class="p">]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Proportion of Total Bookings by Deposit Type'</span><span class="p">,</span><span class="n">weight</span> <span class="o">=</span> <span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">pie</span><span class="p">(</span><span class="n">proportion</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span><span class="n">shadow</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">autopct</span> <span class="o">=</span> <span class="s">'%1.1f%%'</span><span class="p">,</span><span class="n">wedgeprops</span><span class="o">=</span> <span class="p">{</span><span class="s">'edgecolor'</span><span class="p">:</span><span class="s">'black'</span><span class="p">},</span><span class="n">textprops</span><span class="o">=</span><span class="p">{</span><span class="s">'fontsize'</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="output_65_0.png" alt="png" /></p>
+
+<ul>
+  <li><strong>Around 87.6% bookings are booked without deposit, 12.2% bookings are booked with Non Refundable Policy and 0.1% bookings are booked with Refundable Policy</strong></li>
+</ul>
+
+<h3 id="4-data-preparation"><strong>4. Data Preparation</strong></h3>
+
+<p>After exploring the dataset, we will find a lot of information that will help you prepare the data. Most important steps in Data Preparation are:</p>
+
+<ol>
+  <li>Handling Missing Values</li>
+  <li>Exploring Numerical and Categorical Features</li>
+  <li>Feature Engineering (Encoding Categorical Features)</li>
+  <li>Feature Selection (Correlation Heat Map)</li>
+</ol>
+
+<h4 id="41-exploring-numerical-features"><strong>4.1 Exploring Numerical Features</strong></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num_feature</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">df1</span><span class="p">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">df1</span><span class="p">[</span><span class="n">feature</span><span class="p">].</span><span class="n">dtype</span> <span class="o">!=</span> <span class="s">'object'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Number of Numerical Features are : "</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">num_feature</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number of Numerical Features are :  22
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="n">num_feature</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>is_canceled</th>
+      <th>lead_time</th>
+      <th>arrival_date_year</th>
+      <th>arrival_date_month</th>
+      <th>arrival_date_week_number</th>
+      <th>arrival_date_day_of_month</th>
+      <th>stays_in_weekend_nights</th>
+      <th>stays_in_week_nights</th>
+      <th>adults</th>
+      <th>children</th>
+      <th>babies</th>
+      <th>is_repeated_guest</th>
+      <th>previous_cancellations</th>
+      <th>previous_bookings_not_canceled</th>
+      <th>booking_changes</th>
+      <th>agent</th>
+      <th>company</th>
+      <th>days_in_waiting_list</th>
+      <th>adr</th>
+      <th>required_car_parking_spaces</th>
+      <th>total_of_special_requests</th>
+      <th>total_stay</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>342</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>737</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>7</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>13</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>304.0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>14</td>
+      <td>2015</td>
+      <td>July</td>
+      <td>27</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>240.0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>98.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4 id="42-exploring-categorical-features"><strong>4.2 Exploring Categorical Features</strong></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cat_feature</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">df1</span><span class="p">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">df1</span><span class="p">[</span><span class="n">feature</span><span class="p">].</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">'object'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Number of Categorical Features are : "</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">cat_feature</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number of Categorical Features are :  12
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="n">cat_feature</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>_id</th>
+      <th>hotel</th>
+      <th>meal</th>
+      <th>country</th>
+      <th>market_segment</th>
+      <th>distribution_channel</th>
+      <th>reserved_room_type</th>
+      <th>assigned_room_type</th>
+      <th>deposit_type</th>
+      <th>customer_type</th>
+      <th>reservation_status</th>
+      <th>reservation_status_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>617745f32cb05b4871a1523c</td>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>C</td>
+      <td>C</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>617745f32cb05b4871a1523d</td>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>C</td>
+      <td>C</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>617745f32cb05b4871a1523e</td>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>A</td>
+      <td>C</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>617745f32cb05b4871a1523f</td>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Corporate</td>
+      <td>Corporate</td>
+      <td>A</td>
+      <td>A</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>617745f32cb05b4871a15240</td>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Online TA</td>
+      <td>TA/TO</td>
+      <td>A</td>
+      <td>A</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-03</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4 id="43-handling-missing-values"><strong>4.3 Handling Missing Values</strong></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_id                                    0
+hotel                                  0
+is_canceled                            0
+lead_time                              0
+arrival_date_year                      0
+arrival_date_month                     0
+arrival_date_week_number               0
+arrival_date_day_of_month              0
+stays_in_weekend_nights                0
+stays_in_week_nights                   0
+adults                                 0
+children                               4
+babies                                 0
+meal                                   0
+country                              488
+market_segment                         0
+distribution_channel                   0
+is_repeated_guest                      0
+previous_cancellations                 0
+previous_bookings_not_canceled         0
+reserved_room_type                     0
+assigned_room_type                     0
+booking_changes                        0
+deposit_type                           0
+agent                              16340
+company                           112593
+days_in_waiting_list                   0
+customer_type                          0
+adr                                    0
+required_car_parking_spaces            0
+total_of_special_requests              0
+reservation_status                     0
+reservation_status_date                0
+total_stay                             0
+dtype: int64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Check % of Missing Values in the Data set
+</span><span class="n">feature_nan</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">df1</span><span class="p">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">df1</span><span class="p">[</span><span class="n">feature</span><span class="p">].</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_nan</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{} : {}% Missing values'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span><span class="n">np</span><span class="p">.</span><span class="n">around</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="n">feature</span><span class="p">].</span><span class="n">isnull</span><span class="p">().</span><span class="n">mean</span><span class="p">(),</span><span class="mi">4</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>children : 0.0% Missing values
+country : 0.0041% Missing values
+agent : 0.1369% Missing values
+company : 0.9431% Missing values
+</code></pre></div></div>
+
+<ul>
+  <li>“Company” feature has almost 94% missing values. Therefore, we do not have enough values to fill the rows or Impute the company column by mean, median etc. Hence we can drop the “Company” feature.</li>
+  <li>“Agent” feature has 13.69% missing values. “Agent” feature is travel agency Id and these values are unique and we cannot impute Id by mean, median or mode. Therefore, missing data for “Agent” can be filled by 0.</li>
+  <li>“Country” feature has 0.4% missing values. Since missing data of “Country” is less than 1%, we can will impute with most frequent value (Mode).</li>
+  <li>“Children” feature has only 4 missing values and we can fill these missing values by 0 considering guests have no children.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Dropping the "Company" feature
+</span><span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'company'</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Filling missing values by 0 for "Agent" feature
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'agent'</span><span class="p">]</span><span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'agent'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Imputing missing values of "Country" feature
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Filling missing values by 0 for "Children" feature 
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'children'</span><span class="p">]</span><span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'children'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Dropping the "_Id" feature
+</span><span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'_id'</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span> <span class="o">=</span> <span class="n">df1</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="44-feature-engineering-encoding-categorical-features">4.4 Feature Engineering (Encoding Categorical Features)</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cat_feature</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">df2</span><span class="p">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">df2</span><span class="p">[</span><span class="n">feature</span><span class="p">].</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">'object'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Number of Categorical Features are : "</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">cat_feature</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number of Categorical Features are :  11
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">[</span><span class="n">cat_feature</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hotel</th>
+      <th>meal</th>
+      <th>country</th>
+      <th>market_segment</th>
+      <th>distribution_channel</th>
+      <th>reserved_room_type</th>
+      <th>assigned_room_type</th>
+      <th>deposit_type</th>
+      <th>customer_type</th>
+      <th>reservation_status</th>
+      <th>reservation_status_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>C</td>
+      <td>C</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>PRT</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>C</td>
+      <td>C</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Direct</td>
+      <td>Direct</td>
+      <td>A</td>
+      <td>C</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Corporate</td>
+      <td>Corporate</td>
+      <td>A</td>
+      <td>A</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Resort Hotel</td>
+      <td>BB</td>
+      <td>GBR</td>
+      <td>Online TA</td>
+      <td>TA/TO</td>
+      <td>A</td>
+      <td>A</td>
+      <td>No Deposit</td>
+      <td>Transient</td>
+      <td>Check-Out</td>
+      <td>2015-07-03</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Identify unique (Distinct) labels that exists in each categorical features
+</span><span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">cat_feature</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{} : {} labels "</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="n">feature</span><span class="p">].</span><span class="n">unique</span><span class="p">())))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hotel : 2 labels 
+meal : 5 labels 
+country : 177 labels 
+market_segment : 8 labels 
+distribution_channel : 5 labels 
+reserved_room_type : 10 labels 
+assigned_room_type : 12 labels 
+deposit_type : 3 labels 
+customer_type : 4 labels 
+reservation_status : 3 labels 
+reservation_status_date : 926 labels 
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Custom mapping
+</span><span class="n">df2</span><span class="p">[</span><span class="s">'hotel'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s">'hotel'</span><span class="p">].</span><span class="nb">map</span><span class="p">({</span><span class="s">'Resort Hotel'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">'City Hotel'</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s">'arrival_date_month'</span><span class="p">].</span><span class="nb">map</span><span class="p">({</span><span class="s">'January'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'February'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'March'</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">'April'</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">'May'</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">'June'</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">'July'</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span>
+                                                            <span class="s">'August'</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span> <span class="s">'September'</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="s">'October'</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s">'November'</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span> <span class="s">'December'</span><span class="p">:</span><span class="mi">12</span><span class="p">})</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Replacing "Undefined" with "SC" as mentioned in data set description
+</span><span class="n">df2</span><span class="p">[</span><span class="s">"meal"</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">"Undefined"</span><span class="p">,</span> <span class="s">"SC"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Applying label encoding for categorical features
+</span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'meal'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'meal'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'deposit_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'deposit_type'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'customer_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'customer_type'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'market_segment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'market_segment'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'distribution_channel'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'distribution_channel'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'reserved_room_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'reserved_room_type'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'assigned_room_type'</span><span class="p">]</span><span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'assigned_room_type'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'reservation_status'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'reservation_status'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'reservation_status_date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'reservation_status_date'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'country'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h4 id="45-feature-selection">4.5 Feature Selection</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Relationship between Independent and Dependent feature (Correlation Heat map)
+</span><span class="n">df2</span><span class="p">.</span><span class="n">corr</span><span class="p">()[</span><span class="s">"is_canceled"</span><span class="p">].</span><span class="n">sort_values</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reservation_status               -0.917196
+total_of_special_requests        -0.234658
+required_car_parking_spaces      -0.195498
+assigned_room_type               -0.176028
+reservation_status_date          -0.162135
+booking_changes                  -0.144381
+is_repeated_guest                -0.084793
+customer_type                    -0.068140
+reserved_room_type               -0.061282
+previous_bookings_not_canceled   -0.057358
+agent                            -0.046529
+babies                           -0.032491
+meal                             -0.015693
+arrival_date_day_of_month        -0.006130
+stays_in_weekend_nights          -0.001791
+children                          0.005036
+arrival_date_week_number          0.008148
+arrival_date_year                 0.016660
+total_stay                        0.017779
+stays_in_week_nights              0.024765
+adr                               0.047557
+days_in_waiting_list              0.054186
+market_segment                    0.059338
+adults                            0.060017
+previous_cancellations            0.110133
+hotel                             0.136531
+distribution_channel              0.167600
+country                           0.267502
+lead_time                         0.293123
+deposit_type                      0.468634
+is_canceled                       1.000000
+Name: is_canceled, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df2</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"viridis"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fe1bcde00d0&gt;
+</code></pre></div></div>
+
+<p><img src="output_93_1.png" alt="png" /></p>
+
+<ul>
+  <li>“<strong>reservation_status</strong>” seems to be most impactful feature and because of its negative correlation with the “<strong>is_canceled</strong>” feature it can cause a wrong prediction or overfitting and there is chance of data leakage. Hence I will drop this feature.</li>
+  <li>I will not use <strong>arrival_date_week_number, arrival_date_month, arrival_date_year,stays_in_week_nights, stays_in_weekend_nights</strong> since their importances are really low while predicting cancellations.</li>
+  <li><strong>“reservation_status_date”</strong> is date type data and it could not convert another type, this feature can also be dropped</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'reservation_status'</span><span class="p">,</span><span class="s">'arrival_date_week_number'</span><span class="p">,</span><span class="s">'arrival_date_month'</span><span class="p">,</span><span class="s">'arrival_date_year'</span><span class="p">,</span><span class="s">'stays_in_week_nights'</span><span class="p">,</span><span class="s">'stays_in_weekend_nights'</span><span class="p">,</span><span class="s">'reservation_status_date'</span><span class="p">],</span><span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df3</span> <span class="o">=</span> <span class="n">df2</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df3</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hotel</th>
+      <th>is_canceled</th>
+      <th>lead_time</th>
+      <th>arrival_date_day_of_month</th>
+      <th>adults</th>
+      <th>children</th>
+      <th>babies</th>
+      <th>meal</th>
+      <th>country</th>
+      <th>market_segment</th>
+      <th>distribution_channel</th>
+      <th>is_repeated_guest</th>
+      <th>previous_cancellations</th>
+      <th>previous_bookings_not_canceled</th>
+      <th>reserved_room_type</th>
+      <th>assigned_room_type</th>
+      <th>booking_changes</th>
+      <th>deposit_type</th>
+      <th>agent</th>
+      <th>days_in_waiting_list</th>
+      <th>customer_type</th>
+      <th>adr</th>
+      <th>required_car_parking_spaces</th>
+      <th>total_of_special_requests</th>
+      <th>total_stay</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>342</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>135</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>737</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>135</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>59</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>13</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>59</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>304.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>14</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>59</td>
+      <td>6</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>240.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>98.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df3</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(119390, 25)
+</code></pre></div></div>
+
+<h3 id="5-modeling">5. Modeling</h3>
+
+<ul>
+  <li>
+    <p>The next step now is to build a Machine learning model using a Machine learning Algorithm. In this project, we will build <strong>Decision Tree Machine Learning Model using Scikit Learn Library</strong>.</p>
+  </li>
+  <li>
+    <p>We need to divide/split the data into training and test sets using <strong>train_test_split</strong>.</p>
+  </li>
+  <li>
+    <p>For better training of a machine learning model, it is necessary to divide the training data with more numbers (70% to 80%) of samples and the test set with 20% to 30% of the dataset depending on the size of the data.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">df3</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'is_canceled'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="s">'is_canceled'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Train and test split data
+</span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span><span class="n">stratify</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span><span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.30</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Checking if train and test data of target feature is equally distributed
+</span><span class="n">y_train</span><span class="p">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0    0.629581
+1    0.370419
+Name: is_canceled, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_test</span><span class="p">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0    0.629589
+1    0.370411
+Name: is_canceled, dtype: float64
+</code></pre></div></div>
+
+<h4 id="51-model-training">5.1 Model Training</h4>
+
+<p>Steps to be followed to build Machine Learning Model with Scikit-learn</p>
+
+<ol>
+  <li>Import and choose the classifier you plan to use</li>
+  <li>Instantiate the Estimator</li>
+  <li>Fit the model with data</li>
+  <li>Predict the Target feature for a new observation</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import the class
+</span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="c1"># instantiate the estimator(model)
+</span><span class="n">dt_model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+
+<span class="c1">#fit the model with data
+</span><span class="n">dt_model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
+                       random_state=42, splitter='best')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Predict the Target feature for a new observation
+</span><span class="n">dt_model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([1, 0, 0, ..., 0, 1, 0], dtype=int64)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Accuracy score on Training Data
+</span><span class="n">dt_model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.996434255082383
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>The training set accuracy is close to 100%! But we can’t rely solely on the training set accuracy, we must evaluate the model on the test data set too.</strong></p>
+  </li>
+  <li>
+    <p>We can make predictions and compute accuracy in one step using <strong>model.score</strong></p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Accuracy score on Testing Data
+</span><span class="n">dt_model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.8441242985174637
+</code></pre></div></div>
+
+<ul>
+  <li>It appears that the model has learned the training data perfect (99%), and doesn’t generalize well to previously unseen data (84%). This is called <strong>overfitting</strong>, and reducing overfitting is one of the most important parts of any machine learning project.</li>
+</ul>
+
+<h4 id="52-visualizing-decision-trees">5.2 Visualizing Decision Trees</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span><span class="p">,</span> <span class="n">export_text</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">plot_tree</span><span class="p">(</span><span class="n">dt_model</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">X_train</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Text(2232.0, 951.3000000000001, 'deposit_type &lt;= 0.5\ngini = 0.466\nsamples = 83573\nvalue = [52616, 30957]'),
+ Text(1116.0, 679.5, 'lead_time &lt;= 11.5\ngini = 0.406\nsamples = 73211\nvalue = [52468, 20743]'),
+ Text(558.0, 407.70000000000005, 'required_car_parking_spaces &lt;= 0.5\ngini = 0.197\nsamples = 16759\nvalue = [14900, 1859]'),
+ Text(279.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(837.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(1674.0, 407.70000000000005, 'country &lt;= 134.5\ngini = 0.445\nsamples = 56452\nvalue = [37568, 18884]'),
+ Text(1395.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(1953.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(3348.0, 679.5, 'deposit_type &lt;= 1.5\ngini = 0.028\nsamples = 10362\nvalue = [148, 10214]'),
+ Text(2790.0, 407.70000000000005, 'country &lt;= 47.0\ngini = 0.012\nsamples = 10249\nvalue = [61, 10188]'),
+ Text(2511.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(3069.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(3906.0, 407.70000000000005, 'market_segment &lt;= 5.5\ngini = 0.354\nsamples = 113\nvalue = [87, 26]'),
+ Text(3627.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(4185.0, 135.89999999999998, '\n  (...)  \n')]
+</code></pre></div></div>
+
+<p><img src="output_111_1.png" alt="png" /></p>
+
+<ul>
+  <li>
+    <p>The <strong>Gini value</strong> in each box is the loss function used by the decision tree to decide which column should be used for splitting the data, and at what point the column should be split.</p>
+  </li>
+  <li>
+    <p><strong>Lower Gini index indicates a better split</strong></p>
+  </li>
+</ul>
+
+<h4 id="53-feature-importance">5.3 Feature Importance</h4>
+
+<p>Based on the <strong>Gini Index</strong> computations, a decision tree assigns an “importance” value to each feature. These values can be used to interpret the results given by a decision tree.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt_model</span><span class="p">.</span><span class="n">feature_importances_</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.00430979, 0.13396326, 0.0714008 , 0.01165362, 0.00543306,
+       0.00069664, 0.01043204, 0.08195502, 0.06748312, 0.00350234,
+       0.00182046, 0.02199886, 0.00573351, 0.01277278, 0.01703412,
+       0.0153714 , 0.23543993, 0.06189516, 0.00334881, 0.02076981,
+       0.09174907, 0.02378499, 0.05232125, 0.04513017])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Convert this into a dataframe and visualize the most important features
+</span><span class="n">importance_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s">'feature'</span><span class="p">:</span> <span class="n">X_train</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span>
+    <span class="s">'importance'</span><span class="p">:</span> <span class="n">dt_model</span><span class="p">.</span><span class="n">feature_importances_</span>
+<span class="p">}).</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'importance'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">importance_df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s">'importance'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'feature'</span><span class="p">,</span><span class="n">palette</span><span class="o">=</span> <span class="s">'viridis'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Top 10 Most Important Features'</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Feature Importance %'</span><span class="p">,</span><span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Features'</span><span class="p">,</span><span class="n">weight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0, 0.5, 'Features')
+</code></pre></div></div>
+
+<p><img src="output_116_1.png" alt="png" /></p>
+
+<h4 id="54-model-evaluation"><strong>5.4 Model Evaluation</strong></h4>
+
+<ul>
+  <li>
+    <p>We can  increase the model performance by hyperparameter tuning and finding these optimal hyperparameters would help us achieve the best-performing model.</p>
+  </li>
+  <li>
+    <p><strong>GridSearchCV</strong> uses a different combination of all the specified hyperparameters and their values and calculates the performance for each combination and selects the best value for the hyperparameters. This will cost us the processing time and expense but will surely give us the best results.</p>
+  </li>
+  <li>
+    <p><strong>Cross Validation</strong> is a statistical method used to estimate the performance (or accuracy) of Machine learning Models. It is used to protect against overfitting in a predictive model.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Hyper Parameter Tuning using Grid SeachCV on Decision Tree Algorithm to check Best score and Best parameters
+</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">param_grid</span><span class="o">=</span> <span class="p">{</span> <span class="s">'criterion'</span> <span class="p">:</span> <span class="p">[</span><span class="s">'gini'</span><span class="p">,</span> <span class="s">'entropy'</span><span class="p">],</span><span class="s">'min_samples_split'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span>
+                  <span class="s">'min_samples_leaf'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span><span class="s">'max_features'</span> <span class="p">:</span> <span class="p">[</span><span class="s">'auto'</span><span class="p">,</span> <span class="s">'sqrt'</span><span class="p">],</span><span class="s">'max_depth'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]}</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">dt_model</span><span class="p">,</span> <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">best_clf</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Decision Tree Best score: {} using best parameters {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">best_clf</span><span class="p">.</span><span class="n">best_score_</span><span class="p">,</span> <span class="n">best_clf</span><span class="p">.</span><span class="n">best_params_</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Decision Tree Best score: 0.8155264977113239 using best parameters {'criterion': 'gini', 'max_depth': 10, 'max_features': 'auto', 'min_samples_leaf': 1, 'min_samples_split': 6}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Best score is 0.8155264977113239</strong></li>
+  <li><strong>Best parameters are {‘criterion’: ‘gini’, ‘max_depth’: 10, ‘max_features’: ‘auto’, ‘min_samples_leaf’: 1, ‘min_samples_split’: 6}</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Stratified K-fold Cross Validation Technique on Decision Tree Alogorithm to know the exact Mean CV accuracy score
+# Impute the best parameters obtained in Hyper Parameter tuning for Decision Tree Algorithm
+</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span><span class="n">StratifiedKFold</span>
+<span class="n">skfold</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span> <span class="mi">10</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span> <span class="bp">True</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+
+<span class="n">dt_cv_result</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span> <span class="o">=</span> <span class="s">'gini'</span><span class="p">,</span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">max_features</span> <span class="o">=</span> <span class="s">'auto'</span><span class="p">,</span> <span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">min_samples_split</span> <span class="o">=</span> <span class="mi">6</span><span class="p">),</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">skfold</span><span class="p">,</span><span class="n">scoring</span><span class="o">=</span><span class="s">"accuracy"</span><span class="p">,</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dt_cv</span> <span class="o">=</span> <span class="n">dt_cv_result</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="mi">100</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Decision Tree CV Mean Accuarcy Score is {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dt_cv</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Decision Tree CV Mean Accuarcy Score is 80.52935756763547
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>Optimizing Decision Tree Model Performance</strong></p>
+  </li>
+  <li>
+    <p><strong>Impute the best parameters obtained in Hyper Parameter tuning for the newly created Decision Tree model to obtain Best Accuracy Score</strong></p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># instantiate the estimator(new model)
+</span><span class="n">dt_model_new</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span><span class="n">criterion</span> <span class="o">=</span> <span class="s">'gini'</span><span class="p">,</span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">max_features</span> <span class="o">=</span> <span class="s">'auto'</span><span class="p">,</span> 
+                                      <span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">min_samples_split</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="c1">#fit the new model with data
+</span><span class="n">dt_model_new</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=10, max_features='auto', max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=6,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
+                       random_state=42, splitter='best')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Accuracy score on Training Data
+</span><span class="n">dt_model_new</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.8099146853648905
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Accuracy score on Test Data
+</span><span class="n">dt_model_new</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.8047854370829495
+</code></pre></div></div>
+
+<ul>
+  <li><strong>It appears that the model has learned the training data perfect (80.99%), and it generalizes well on test (unseen) data (80.47%)</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Visualizing Optimized Decision Tree
+</span><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">plot_tree</span><span class="p">(</span><span class="n">dt_model_new</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">X_train</span><span class="p">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Text(2232.0, 951.3000000000001, 'deposit_type &lt;= 0.5\ngini = 0.466\nsamples = 83573\nvalue = [52616, 30957]'),
+ Text(1116.0, 679.5, 'total_of_special_requests &lt;= 0.5\ngini = 0.406\nsamples = 73211\nvalue = [52468, 20743]'),
+ Text(558.0, 407.70000000000005, 'distribution_channel &lt;= 2.5\ngini = 0.451\nsamples = 38990\nvalue = [25604, 13386]'),
+ Text(279.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(837.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(1674.0, 407.70000000000005, 'agent &lt;= 7.5\ngini = 0.338\nsamples = 34221\nvalue = [26864, 7357]'),
+ Text(1395.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(1953.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(3348.0, 679.5, 'booking_changes &lt;= 0.5\ngini = 0.028\nsamples = 10362\nvalue = [148, 10214]'),
+ Text(2790.0, 407.70000000000005, 'hotel &lt;= 0.5\ngini = 0.015\nsamples = 10210\nvalue = [78, 10132]'),
+ Text(2511.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(3069.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(3906.0, 407.70000000000005, 'distribution_channel &lt;= 2.0\ngini = 0.497\nsamples = 152\nvalue = [70, 82]'),
+ Text(3627.0, 135.89999999999998, '\n  (...)  \n'),
+ Text(4185.0, 135.89999999999998, '\n  (...)  \n')]
+</code></pre></div></div>
+
+<p><img src="output_126_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Since the size of the pickle file is more, I will compress the pickle file using BZ2 library**
+</span><span class="kn">import</span> <span class="nn">bz2</span><span class="p">,</span><span class="n">pickle</span>
+<span class="n">sfile</span> <span class="o">=</span> <span class="n">bz2</span><span class="p">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="s">'dt_model_new_pickle.pkl'</span><span class="p">,</span><span class="s">'wb'</span><span class="p">)</span>
+<span class="n">pickle</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dt_model_new</span><span class="p">,</span><span class="n">sfile</span><span class="p">)</span>
+<span class="n">sfile</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df4</span> <span class="o">=</span> <span class="n">df3</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df4</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hotel</th>
+      <th>is_canceled</th>
+      <th>lead_time</th>
+      <th>arrival_date_day_of_month</th>
+      <th>adults</th>
+      <th>children</th>
+      <th>babies</th>
+      <th>meal</th>
+      <th>country</th>
+      <th>market_segment</th>
+      <th>distribution_channel</th>
+      <th>is_repeated_guest</th>
+      <th>previous_cancellations</th>
+      <th>previous_bookings_not_canceled</th>
+      <th>reserved_room_type</th>
+      <th>assigned_room_type</th>
+      <th>booking_changes</th>
+      <th>deposit_type</th>
+      <th>agent</th>
+      <th>days_in_waiting_list</th>
+      <th>customer_type</th>
+      <th>adr</th>
+      <th>required_car_parking_spaces</th>
+      <th>total_of_special_requests</th>
+      <th>total_stay</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>342</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>135</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>737</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>135</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>59</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>13</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>59</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>304.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>75.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>14</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>59</td>
+      <td>6</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>240.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>98.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df4</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(119390, 25)
+</code></pre></div></div>
+
+<h3 id="6-model-deployment"><strong>6. Model Deployment</strong></h3>
+
+<ul>
+  <li>
+    <p>After building a model, the final stage of the machine learning lifecycle is to deploy the ML model.</p>
+  </li>
+  <li>
+    <p>ML model should be scalable and accessible to the business users/Customers by creating Web Application and deploying the model on the cloud using AWS, Google Cloud, Heroku cloud platforms.</p>
+  </li>
+  <li>
+    <p>Inorder to build the Web app, I will use the 10 most important features that are helpful in predicting the Hotel Booking Cancelation from the guests since it would be pain to front end user to fill all 23 features on the web app. I will drop the rest of features so we can build an interactive and user friendly web app</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">df4</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'is_canceled'</span><span class="p">,</span><span class="s">'hotel'</span><span class="p">,</span><span class="s">'arrival_date_day_of_month'</span><span class="p">,</span><span class="s">'adults'</span><span class="p">,</span><span class="s">'children'</span><span class="p">,</span><span class="s">'babies'</span><span class="p">,</span><span class="s">'meal'</span><span class="p">,</span><span class="s">'country'</span><span class="p">,</span><span class="s">'distribution_channel'</span><span class="p">,</span><span class="s">'is_repeated_guest'</span><span class="p">,</span>
+              <span class="s">'previous_bookings_not_canceled'</span><span class="p">,</span><span class="s">'reserved_room_type'</span><span class="p">,</span><span class="s">'agent'</span><span class="p">,</span><span class="s">'days_in_waiting_list'</span><span class="p">],</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df4</span><span class="p">[</span><span class="s">'is_canceled'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Train and test data again to check if there is any drop in accuracy of the model after eliminating features
+</span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span><span class="n">stratify</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span><span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.30</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="n">dt_model_new</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">dt_model_new</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
+                       random_state=42, splitter='best')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt_model_new</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.987675445418975
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt_model_new</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.8125191947957674
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Compress the Pickle file to store Machine Learning Model for Web App Development
+</span><span class="kn">import</span> <span class="nn">bz2</span><span class="p">,</span><span class="n">pickle</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">bz2</span><span class="p">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="s">'dtmodelfinal.pkl'</span><span class="p">,</span><span class="s">'wb'</span><span class="p">)</span>
+<span class="n">pickle</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dt_model_new</span><span class="p">,</span><span class="nb">file</span><span class="p">)</span>
+<span class="nb">file</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>Therefore, we have successfully deployed Machine Learning Web Application on Heroku Cloud using Python and Streamlit.</strong></p>
+  </li>
+  <li>
+    <p><strong>Link to the ML Web app : https://cancelation-predictor.herokuapp.com/</strong></p>
+  </li>
+</ul>
+:ET
