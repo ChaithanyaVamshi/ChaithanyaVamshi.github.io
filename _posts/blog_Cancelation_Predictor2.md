@@ -1,53 +1,30 @@
----
-layout: post
-title: "Predicting Hotel Booking Cancellations Using Machine Learning With Python"
-subtitle: "Have you ever wondered what if there was a way we could predict which guests are likely to Cancel the Hotel Booking? That would be great right? 
-<br>
-<br>
-In this blog, I will walk you through the entire process of solving a real-world Machine learning project right from understanding the Business problem to the Model deployment on the cloud."
-background: '/img/posts/bg-post1.png'
----
-
-## Predicting Hotel Booking Cancellations Using Machine Learning With Python
-
-<p style='text-align: justify'> 
+# **Predicting Hotel Booking Cancellations Using Machine Learning With Python**
 
 Booking cancellations have a substantial impact on demand management decisions in the hospitality industry.
-<br>
-<br>
+
 Every year, more than 140 million bookings were made on the internet and many hotel bookings were booked through top-visited travel websites like Booking.com, Expedia.com, Hotels.com, etc.
-</p>
 
-<p align="center">
-  <img width="800" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/header_img.png">
-</p>
+![header_img.png](attachment:header_img.png)
 
-### Hotel Booking Cancellations, A Growing Problem…
+## Hotel Booking Cancellations, A Growing Problem…
 
-<p style='text-align: justify'> When Analyzing the past 5 years data, D-Edge Hospitality solutions has found that the global average cancellation rate on bookings has reached almost 40% and this trend produces a very negative impact on hotel revenue.
-</p>
+When Analyzing the past 5 years data, D-Edge Hospitality solutions has found that the global average cancellation rate on bookings has reached almost 40% and this trend produces a very negative impact on hotel revenue.
 
-<p align="center">
-  <img width="800" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/header2.png">
-</p>
+![image.png](attachment:image.png)
 
-<p style='text-align: justify'>
-To overcome the problems caused by booking cancellations, hotels implement rigid cancellation policies, inventory management, and overbooking strategies, which can also have a negative influence on revenue and reputation.<br><br>
+To overcome the problems caused by booking cancellations, hotels implement rigid cancellation policies, inventory management, and overbooking strategies, which can also have a negative influence on revenue and reputation.
 
 Once the reservation has been canceled, there is almost nothing to be done and it creates discomfort for many Hotels and Hotel Technology companies. Therefore, predicting reservations which might get canceled and preventing these cancellations will create a surplus revenue for both Hotels and Hotel Technology companies.
-</p>
 
-### Motivation
+## Motivation
 
-<p style='text-align: justify'>
 Have you ever wondered what if there was a way we could predict which guests are likely to Cancel the Hotel Booking? That would be great right?
-<br><br>
-Luckily, by using Machine learning with Python, we can predict the guests who are likely to cancel the reservation at the Hotels and this will create a surplus revenue, better forecasts and reduce uncertainty in business management decisions.
-<br><br>
-If you want to follow a process while working on a machine learning project, this blog is for you. In this blog, I will walk you through the entire process of solving a real-world Machine learning project right from understanding the Business problem to the Model deployment on the cloud.
-</p>
 
-### Machine Learning Project Life Cycle
+Luckily, by using Machine learning with Python, we can predict the guests who are likely to cancel the reservation at the Hotels and this will create a surplus revenue, better forecasts and reduce uncertainty in business management decisions.
+
+If you want to follow a process while working on a machine learning project, this blog is for you. In this blog, I will walk you through the entire process of solving a real-world Machine learning project right from understanding the Business problem to the Model deployment on the cloud.
+
+## Machine Learning Project Life Cycle
 
 1.   Understanding the Business Problem
 2.   Data Collection and Understanding
@@ -56,32 +33,25 @@ If you want to follow a process while working on a machine learning project, thi
 5.   Modeling
 6.   Model Deployment
 
-<p align="center">
-  <img width="800" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/crisp_dm.png">
-</p>
+![crisp_dm.png](attachment:crisp_dm.png)
 
-#### 1. Understanding Business Problem
-<p style='text-align: justify'>
+### 1. Understanding Business Problem
 
 The Goal of this project is to Predict the Guests who are likely to Cancel the Hotel Booking using Machine Learning with Python. Therefore, predicting reservations which might get canceled and preventing these cancellations will create a surplus revenue, better forecasts and reduce uncertainty in business management decisions.
-</p>
 
-#### 2. Data Collection and Understanding
-<p style='text-align: justify'>
+### 2. Data Collection and Understanding
+
+I have collected the dataset from the kaggle. Dataset is available at https://www.kaggle.com/jessemostipak/hotel-booking-demand
+
 This dataset contains booking information for a City hotel and a Resort hotel, and includes information such as when the booking was made, length of stay, the number of adults, children, and/or babies, and the number of available parking spaces etc.
-</p>
-I have collected the dataset from the kaggle. Dataset is available at [Kaggle Dataset](https://www.kaggle.com/jessemostipak/hotel-booking-demand)
 
-
-#### 3. Data Exploration
-<p style='text-align: justify'>
+### 3. Data Exploration
 
 In this step, we will apply Exploratory Data Analysis (EDA) to extract insights from the data set to know which features have contributed more in predicting Cancellations by performing Data Analysis using Pandas and Data visualization using Matplotlib & Seaborn. It is always a good practice to understand the data first and try to gather as many insights from it.
-</p>
 
 Below are tasks to be performed:
 
-- What is MongoDB Atlas Cloud?
+- What is MongoDB Atlas Cloud
 - Steps to setup MongoDB Atlas Cloud
 - Importing Libraries
 - Storing the data into MongoDB Atlas Cloud Database
@@ -89,42 +59,42 @@ Below are tasks to be performed:
 - Exploratory Data Analysis (EDA) on all Features
 - Data Visualisation on all Important Features
 
-##### 3.1 What is MongoDB Atlas Cloud?
-<p style='text-align: justify'>
-MongoDB Atlas is a fully-managed Database-as-a-Service (DBaaS) cloud database that handles all the complexity of deploying, managing, and healing your deployments on the cloud service provider of your choice (AWS , Azure, and GCP). MongoDB Atlas is the best way to deploy, run, and scale MongoDB in the cloud.
-<br><br>
-In this project, we will store the dataset into MongoDB Atlas cloud database by following industry best practices which helps in managing the data in scalable, robust and secure manner.
-</p>
+#### 3.1 What is MongoDB Atlas Cloud?
 
-##### 3.2 Steps needed to get started using MongoDB Atlas Cloud:
+MongoDB Atlas is a fully-managed Database-as-a-Service (DBaaS) cloud database that handles all the complexity of deploying, managing, and healing your deployments on the cloud service provider of your choice (AWS , Azure, and GCP). MongoDB Atlas is the best way to deploy, run, and scale MongoDB in the cloud.
+
+In this project, we will store the dataset into MongoDB Atlas cloud database by following industry best practices which helps in managing the data in scalable, robust and secure manner.
+
+#### 3.2 Steps needed to get started using MongoDB Atlas Cloud:
+<br>
+
 **1. Create an Atlas Account using Gmail Id**
 
 **2. Create a Free Cluster in MongoDB Atlas Cloud**
-<p align="center">
-  <img width="900" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/md1.png">
-</p>
+
+![image.png](attachment:image.png)
+<br>
 
 **3. Add Your Connection IP Address to Your IP Access List**
-<p align="center">
-  <img width="900" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/md2.png">
-</p>
+
+![image-2.png](attachment:image-2.png)
+<br>
 
 **4. Create a Database and User for Your Cluster with username and password to make it secure**
-<p align="center">
-  <img width="900" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/md3.png">
-</p>
+
+![image-3.png](attachment:image-3.png)
+<br>
 
 **5. Connect to Your Cluster**
-<p align="center">
-  <img width="900" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/md4.png">
-</p>
+
+![image-4.png](attachment:image-4.png)
+<br>
 
 **6. Insert and View Data in Your Cluster**
-<p align="center">
-  <img width="900" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/md5.png">
-</p>
 
-##### **3.3 Importing Libraries**
+![image-5.png](attachment:image-5.png)
+
+#### **3.3 Importing Libraries**
 
 
 ```python
@@ -142,7 +112,7 @@ filterwarnings('ignore')
     <Figure size 864x432 with 0 Axes>
 
 
-##### **3.4 Storing the Dataset into MongoDB Database**
+#### **3.4 Storing the Dataset into MongoDB Database**
 
 
 ```python
@@ -438,7 +408,7 @@ print("All the Data has been Exported to MongoDB Successfully")
     All the Data has been Exported to MongoDB Successfully
     
 
-##### **3.5 Loading (Fetching) data from MongoDB Database**
+#### **3.5 Loading (Fetching) data from MongoDB Database**
 
 
 ```python
@@ -460,6 +430,7 @@ list_cursor = list(all_records)
 ```python
 #Convert list into Dataframe
 df1 = pd.DataFrame(list_cursor)
+
 ```
 
 
@@ -708,6 +679,9 @@ df1.head()
 </table>
 </div>
 
+
+
+
 ```python
 df1.info()
 ```
@@ -754,7 +728,7 @@ df1.info()
     memory usage: 30.1+ MB
     
 
-##### **3.6 Exploratory Data Analysis (EDA) on all Features**
+#### **3.6 Exploratory Data Analysis (EDA) on all Features**
 
 **1. Top 10 countries of origin of Hotel visitors (Guests)**
 
@@ -789,12 +763,18 @@ plt.xlabel('Country')
 plt.ylabel('Reservation Count')
 ```
 
+
+
+
     Text(0, 0.5, 'Reservation Count')
- 
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_33_1.png">
-</p>
+
+
+
+
     
+![png](output_33_1.png)
+    
+
 
 - **About 40% of all bookings are created from Portugal followed by Great Britain (10%) & France (8%)**
 
@@ -841,9 +821,12 @@ plt.ylabel('Reservation Count')
 
     Text(0, 0.5, 'Reservation Count')
 
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_37_1.png">
-</p>
+
+
+
+    
+![png](output_37_1.png)
+    
 
 
 - **August is the most occupied (busiest) month with 11.62% bookings and January is the most unoccupied month with 4.96% bookings.**
@@ -874,9 +857,10 @@ plt.pie(proportion,labels=labels,shadow = True, autopct = '%1.1f%%',wedgeprops= 
 plt.show()
 ```
 
-<p align="center">
-  <img width="400" height="350" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_41_0.png">
-</p>
+
+    
+![png](output_41_0.png)
+    
 
 
 - **According to the pie chart, 63% bookings were not cancelled and 37% of the bookings were cancelled at the Hotel.**
@@ -897,9 +881,9 @@ plt.legend(loc="upper right")
 plt.show()
 ```
 
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_44_0.png">
-</p>
+
+    
+![png](output_44_0.png)
     
 
 
@@ -934,10 +918,11 @@ plt.xlabel("Cancelation Status")
 plt.ylabel(" Reservations Count")
 plt.show()
 ```
-  
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_48_0.png">
-</p>
+
+
+    
+![png](output_48_0.png)
+    
 
 
 - **Resort Hotel : Total of 25.14% Bookings were cancelled**
@@ -961,10 +946,10 @@ plt.show()
 ```
 
 
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_51_0.png">
-</p>
     
+![png](output_51_0.png)
+    
+
 
 - **August is the most occupied (Busiest) month of bookings.**
 - **Highest Average Daily Rate(ADR) is in August may be it could be one of the reasons for more canceled bookings.**
@@ -1008,10 +993,8 @@ plt.ylabel('Reservation Count')
 
 
 
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_55_1.png">
-</p>
     
+![png](output_55_1.png)
     
 
 
@@ -1040,9 +1023,7 @@ plt.legend(loc = "upper right")
 
 
     
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_58_1.png">
-</p>
+![png](output_58_1.png)
     
 
 
@@ -1068,9 +1049,9 @@ plt.legend(loc = "upper right")
 
 
 
-<p align="center">
-  <img width="700" height="450" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_61_1.png">
-</p>
+
+    
+![png](output_61_1.png)
     
 
 
@@ -1103,15 +1084,15 @@ plt.pie(proportion,labels=labels,shadow = True, autopct = '%1.1f%%',wedgeprops= 
 plt.show()
 ```
 
-<p align="center">
-  <img width="430" height="380" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_65_0.png">
-</p>
+
+    
+![png](output_65_0.png)
     
 
 
 - **Around 87.6% bookings are booked without deposit, 12.2% bookings are booked with Non Refundable Policy and 0.1% bookings are booked with Refundable Policy**
 
-#### **4. Data Preparation**
+### **4. Data Preparation**
 
 After exploring the dataset, we will find a lot of information that will help you prepare the data. Most important steps in Data Preparation are: 
 
@@ -1120,7 +1101,7 @@ After exploring the dataset, we will find a lot of information that will help yo
 3.   Feature Engineering (Encoding Categorical Features)
 4.   Feature Selection (Correlation Heat Map)
 
-##### **4.1 Exploring Numerical Features**
+#### **4.1 Exploring Numerical Features**
 
 
 ```python
@@ -1312,7 +1293,8 @@ df1[num_feature][:5]
 </div>
 
 
-##### **4.2 Exploring Categorical Features**
+
+#### **4.2 Exploring Categorical Features**
 
 
 ```python
@@ -1444,7 +1426,8 @@ df1[cat_feature][:5]
 </div>
 
 
-##### **4.3 Handling Missing Values**
+
+#### **4.3 Handling Missing Values**
 
 
 ```python
@@ -1547,7 +1530,7 @@ df1.drop(columns = ['_id'],inplace= True)
 df2 = df1.copy()
 ```
 
-##### 4.4 Feature Engineering (Encoding Categorical Features)
+#### 4.4 Feature Engineering (Encoding Categorical Features)
 
 
 ```python
@@ -1674,6 +1657,7 @@ df2[cat_feature][:5]
 
 
 
+
 ```python
 # Identify unique (Distinct) labels that exists in each categorical features
 for feature in cat_feature:
@@ -1724,7 +1708,7 @@ df2['reservation_status_date'] = le.fit_transform(df2['reservation_status_date']
 df2['country'] = le.fit_transform(df2['country'])
 ```
 
-##### 4.5 Feature Selection
+#### 4.5 Feature Selection
 
 
 ```python
@@ -1783,9 +1767,9 @@ sns.heatmap(df2.corr(), cmap="viridis")
 
 
 
-<p align="center">
-  <img width="800" height="550" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_93_1.png">
-</p>
+
+    
+![png](output_93_1.png)
     
 
 
@@ -2011,64 +1995,13 @@ df3.shape
 
 
 
-#### 5. Modeling
+### 5. Modeling
 
 - The next step now is to build a Machine learning model using a Machine learning Algorithm. In this project, we will build **Decision Tree Machine Learning Model using Scikit Learn Library**.
 
 - We need to divide/split the data into training and test sets using **train_test_split**. 
 
 - For better training of a machine learning model, it is necessary to divide the training data with more numbers (70% to 80%) of samples and the test set with 20% to 30% of the dataset depending on the size of the data.
-
-
-```python
-X = df3.drop(['is_canceled'], axis = 1)
-y = df3['is_canceled']
-```
-
-
-```python
-#Train and test split data
-from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test = train_test_split(X,y,random_state = 42,stratify = y,test_size = 0.30)
-```
-
-
-```python
-#Checking if train and test data of target feature is equally distributed
-y_train.value_counts(normalize=True)
-```
-
-
-
-
-    0    0.629581
-    1    0.370419
-    Name: is_canceled, dtype: float64
-
-
-
-
-```python
-y_test.value_counts(normalize=True)
-```
-
-
-
-
-    0    0.629589
-    1    0.370411
-    Name: is_canceled, dtype: float64
-
-
-
-##### 5.1 Model Training
-
-Steps to be followed to build Machine Learning Model with Scikit-learn
-
-1.   Import and choose the classifier you plan to use
-2.   Instantiate the Estimator
-3.   Fit the model with data
-4.   Predict the Target feature for a new observation
 
 #### 5.1 What is Decision Tree Algorithm?
 
@@ -2135,6 +2068,59 @@ Gini index is a cost function used to evaluate splits in the dataset. It is calc
 
 1. Calculate Gini for sub-nodes, using the formula sum of the square of probability for success and failure (p^2+q^2).
 2. Calculate Gini for split using weighted Gini score of each node of that split
+
+#### 5.3 Decision Tree Implementation in Python
+
+
+```python
+X = df3.drop(['is_canceled'], axis = 1)
+y = df3['is_canceled']
+```
+
+
+```python
+#Train and test split data
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test = train_test_split(X,y,random_state = 42,stratify = y,test_size = 0.30)
+```
+
+
+```python
+#Checking if train and test data of target feature is equally distributed
+y_train.value_counts(normalize=True)
+```
+
+
+
+
+    0    0.629581
+    1    0.370419
+    Name: is_canceled, dtype: float64
+
+
+
+
+```python
+y_test.value_counts(normalize=True)
+```
+
+
+
+
+    0    0.629589
+    1    0.370411
+    Name: is_canceled, dtype: float64
+
+
+
+#### 5.4 Model Training
+
+Steps to be followed to build Machine Learning Model with Scikit-learn
+
+1.   Import and choose the classifier you plan to use
+2.   Instantiate the Estimator
+3.   Fit the model with data
+4.  Predict the Target feature for a new observation
 
 
 ```python
@@ -2205,7 +2191,7 @@ dt_model.score(X_test,y_test)
 
 - It appears that the model has learned the training data perfect (99%), and doesn't generalize well to previously unseen data (84%). This is called **overfitting**, and reducing overfitting is one of the most important parts of any machine learning project.
 
-##### 5.2 Visualizing Decision Trees
+#### 5.5 Visualizing Decision Trees
 
 
 ```python
@@ -2213,17 +2199,39 @@ from sklearn.tree import plot_tree, export_text
 plt.figure(figsize=(80,20))
 plot_tree(dt_model, feature_names=X_train.columns, max_depth=2, filled=True)
 ```
-  
-<p align="center">
-  <img width="900" height="500" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_111_1.png">
-</p>  
+
+
+
+
+    [Text(2232.0, 951.3000000000001, 'deposit_type <= 0.5\ngini = 0.466\nsamples = 83573\nvalue = [52616, 30957]'),
+     Text(1116.0, 679.5, 'lead_time <= 11.5\ngini = 0.406\nsamples = 73211\nvalue = [52468, 20743]'),
+     Text(558.0, 407.70000000000005, 'required_car_parking_spaces <= 0.5\ngini = 0.197\nsamples = 16759\nvalue = [14900, 1859]'),
+     Text(279.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(837.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(1674.0, 407.70000000000005, 'country <= 134.5\ngini = 0.445\nsamples = 56452\nvalue = [37568, 18884]'),
+     Text(1395.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(1953.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(3348.0, 679.5, 'deposit_type <= 1.5\ngini = 0.028\nsamples = 10362\nvalue = [148, 10214]'),
+     Text(2790.0, 407.70000000000005, 'country <= 47.0\ngini = 0.012\nsamples = 10249\nvalue = [61, 10188]'),
+     Text(2511.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(3069.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(3906.0, 407.70000000000005, 'market_segment <= 5.5\ngini = 0.354\nsamples = 113\nvalue = [87, 26]'),
+     Text(3627.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(4185.0, 135.89999999999998, '\n  (...)  \n')]
+
+
+
+
+    
+![png](output_124_1.png)
+    
 
 
 - The **Gini value** in each box is the loss function used by the decision tree to decide which column should be used for splitting the data, and at what point the column should be split. 
 
 - **Lower Gini index indicates a better split**
 
-##### 5.3 Feature Importance
+#### 5.6 Feature Importance
 
 Based on the **Gini Index** computations, a decision tree assigns an "importance" value to each feature. These values can be used to interpret the results given by a decision tree.
 
@@ -2268,13 +2276,13 @@ plt.ylabel('Features',weight='bold')
 
 
 
-<p align="center">
-  <img width="700" height="400" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_116_1.png">
-</p>  
+
+    
+![png](output_129_1.png)
+    
 
 
-
-##### **5.4 Model Evaluation**
+#### **5.7 Model Evaluation**
 
 - We can  increase the model performance by hyperparameter tuning and finding these optimal hyperparameters would help us achieve the best-performing model.
 
@@ -2382,10 +2390,31 @@ plt.figure(figsize=(80,20))
 plot_tree(dt_model_new, feature_names=X_train.columns, max_depth=2, filled=True)
 ```
 
-<p align="center">
-  <img width="900" height="500" src="https://raw.githubusercontent.com/ChaithanyaVamshi/chaithanyavamshi.github.io/master/img/posts/output_126_1.png">
-</p>  
 
+
+
+    [Text(2232.0, 951.3000000000001, 'deposit_type <= 0.5\ngini = 0.466\nsamples = 83573\nvalue = [52616, 30957]'),
+     Text(1116.0, 679.5, 'total_of_special_requests <= 0.5\ngini = 0.406\nsamples = 73211\nvalue = [52468, 20743]'),
+     Text(558.0, 407.70000000000005, 'distribution_channel <= 2.5\ngini = 0.451\nsamples = 38990\nvalue = [25604, 13386]'),
+     Text(279.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(837.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(1674.0, 407.70000000000005, 'agent <= 7.5\ngini = 0.338\nsamples = 34221\nvalue = [26864, 7357]'),
+     Text(1395.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(1953.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(3348.0, 679.5, 'booking_changes <= 0.5\ngini = 0.028\nsamples = 10362\nvalue = [148, 10214]'),
+     Text(2790.0, 407.70000000000005, 'hotel <= 0.5\ngini = 0.015\nsamples = 10210\nvalue = [78, 10132]'),
+     Text(2511.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(3069.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(3906.0, 407.70000000000005, 'distribution_channel <= 2.0\ngini = 0.497\nsamples = 152\nvalue = [70, 82]'),
+     Text(3627.0, 135.89999999999998, '\n  (...)  \n'),
+     Text(4185.0, 135.89999999999998, '\n  (...)  \n')]
+
+
+
+
+    
+![png](output_139_1.png)
+    
 
 
 
@@ -2610,7 +2639,7 @@ df4.shape
 
 
 
-#### **6. Model Deployment**
+### **6. Model Deployment**
 
 - After building a model, the final stage of the machine learning lifecycle is to deploy the ML model.
 
@@ -2684,6 +2713,26 @@ pickle.dump(dt_model_new,file)
 file.close()
 ```
 
-- **Therefore, we have successfully deployed Machine Learning Web Application on Heroku Cloud using Python and Streamlit.**
+#### 6.1 Machine Learning Web App Deployment on Heroku Cloud Using Python & Streamlit
 
-- **Link to the ML Web app : <https://cancelation-predictor.herokuapp.com>**
+Once the training is completed, we need to expose the trained model as an API for the user to consume it. For prediction, the saved model is loaded first and then the predictions are made using it. If the web app works fine, the same app is deployed to the cloud platform. The application flow for cloud deployment looks like:
+
+![image.png](attachment:image.png)
+
+### 6.2 ML Web App Demonstration
+
+- **Link to the ML Web app : https://cancelation-predictor.herokuapp.com/**
+
+![image.png](attachment:image.png)
+
+### 6.3 Video Demonstration of Machine Learning Project
+
+
+```python
+
+```
+
+
+```python
+
+```
